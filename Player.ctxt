@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.target=Player
+comment1.params=
+comment1.target=void\ Player()
+comment10.params=in
+comment10.target=void\ soldAsset(java.lang.String)
+comment2.params=money_in
+comment2.target=void\ Player(double)
+comment3.params=in
+comment3.target=void\ spend(double)
+comment4.params=in
+comment4.target=void\ earn(double)
+comment5.params=
+comment5.target=double\ getMoney()
+comment6.params=
+comment6.target=int\ getNumofAsset()
+comment7.params=in
+comment7.target=Asset\ getAsset(int)
+comment8.params=in
+comment8.target=Asset\ getAsset(java.lang.String)
+comment9.params=in
+comment9.target=void\ setAsset(Asset)
+numComments=11

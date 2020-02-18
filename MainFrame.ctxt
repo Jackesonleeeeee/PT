@@ -2,4 +2,10 @@
 comment0.target=MainFrame
 comment1.params=args
 comment1.target=void\ main(java.lang.String[])
-numComments=2
+comment2.params=evt
+comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment3.params=a
+comment3.target=void\ startGame(Player)
+comment4.params=
+comment4.target=int\ getInitialFund()
+numComments=5
