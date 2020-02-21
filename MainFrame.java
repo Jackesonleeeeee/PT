@@ -102,13 +102,13 @@ class MainFrame{
        store.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
             frame.dispose();
-            //Store(a);
+            Store(a);
        }
        });
        business.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
             frame.dispose();
-            //Business(a);
+            Business(a);
        }
        });
        invest.addActionListener(new ActionListener(){
@@ -174,13 +174,7 @@ class MainFrame{
                 homeScreen(a);
             }
             else{
-                JFrame fail=new JFrame("You didn't get the job");
-                JLabel text=new JLabel("You didn't get the job");
-                text.setBounds(100,200,700,30);
-                fail.setLayout(null);
-                fail.add(text);
-                fail.setVisible(true);
-                homeScreen(a);
+                noJob(a);
             }
        }
        });
@@ -193,14 +187,7 @@ class MainFrame{
                 homeScreen(a);
             }
             else{
-                
-                JFrame fail=new JFrame("You didn't get the job");
-                JLabel text=new JLabel("You didn't get the job");
-                text.setBounds(100,200,700,30);
-                fail.setLayout(null);
-                fail.add(text);
-                fail.setVisible(true);
-                homeScreen(a);
+                noJob(a);
             }
        }
        });
@@ -213,15 +200,236 @@ class MainFrame{
                 homeScreen(a);
             }
             else{
-                JFrame fail=new JFrame("You didn't get the job");
-                JLabel text=new JLabel("You didn't get the job");
-                text.setBounds(100,200,700,30);
-                fail.setLayout(null);
-                fail.add(text);
-                fail.setVisible(true);
-                homeScreen(a);
+                noJob(a);
             }
        }
        });
+    }
+    public static void noJob(Player a){
+        JFrame frame=new JFrame("You didn't get the job");
+        frame.setSize(900,900);
+        JLabel text=new JLabel("You didn't get the job");
+        text.setBounds(100,200,700,30);
+        frame.setLayout(null);
+        frame.add(text);
+        frame.setVisible(true);
+        JButton next=new JButton("Next");
+        JPanel nextp=new JPanel();
+        nextp.add(next);
+        nextp.setBounds(300,500,200,30);
+        frame.add(nextp);
+        next.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            frame.dispose();
+            homeScreen(a);
+       }
+       });
+    }
+    public static void haveJob(Player a){
+        JFrame frame=new JFrame("You get the job");
+        frame.setSize(900,900);
+        JLabel text=new JLabel("You get the job");
+        text.setBounds(100,200,700,30);
+        frame.setLayout(null);
+        frame.add(text);
+        frame.setVisible(true);
+        JButton next=new JButton("Next");
+        JPanel nextp=new JPanel();
+        nextp.add(next);
+        nextp.setBounds(300,500,200,30);
+        frame.add(nextp);
+        next.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            frame.dispose();
+            homeScreen(a);
+       }
+       });
+    }
+    public static void Store(Player a){
+        Asset house1=new Asset();
+        house1.Asset("House 1",100000,0,true);
+        Asset house2=new Asset();
+        house2.Asset("House 2",80000,0,true);
+        Asset house3=new Asset();
+        house3.Asset("House 3",50000,0,true);
+        Asset car1=new Asset();
+        car1.Asset("Car 1",30000,0,true);
+        Asset car2=new Asset();
+        car2.Asset("Car 2",8000,0,true);
+        Asset car3=new Asset();
+        car3.Asset("Car 3",5000,0,true);
+        
+        JFrame frame=new JFrame("Store");
+        frame.setSize(900,900);
+        frame.setLayout(null);
+        JLabel message=new JLabel("Click on what you want to buy");
+        JLabel priceinfo=new JLabel("House 1: $100000, House 2: $80000, House 3: $50000, Car 1: $30000, Car 2: $8000, Car 3: $5000");
+        JButton house1b=new JButton("House 1");
+        JButton house2b=new JButton("House 2");
+        JButton house3b=new JButton("House 3");
+        JButton car1b=new JButton("Car 1");
+        JButton car2b=new JButton("Car 2");
+        JButton car3b=new JButton("Car 3");
+        JButton back=new JButton("Back");
+        JPanel house1p=new JPanel();
+        JPanel house2p=new JPanel();
+        JPanel house3p=new JPanel();
+        JPanel car1p=new JPanel();
+        JPanel car2p=new JPanel();
+        JPanel car3p=new JPanel();
+        JPanel backp=new JPanel();
+        house1p.add(house1b);
+        house2p.add(house2b);
+        house3p.add(house3b);
+        car1p.add(car1b);
+        car2p.add(car2b);
+        car3p.add(car3b);
+        backp.add(back);
+        message.setBounds(50,150,800,30);
+        priceinfo.setBounds(50,200,800,30);
+        house1p.setBounds(100,300,100,30);
+        house2p.setBounds(350,300,100,30);
+        house3p.setBounds(600,300,100,30);
+        car1p.setBounds(100,400,100,30);
+        car2p.setBounds(350,400,100,30);
+        car3p.setBounds(600,400,100,30);
+        backp.setBounds(650,600,200,30);
+        frame.add(message);
+        frame.add(priceinfo);
+        frame.add(house1p);
+        frame.add(house2p);
+        frame.add(house3p);
+        frame.add(car1p);
+        frame.add(car2p);
+        frame.add(car3p);
+        frame.add(backp);
+        frame.setVisible(true);
+        house1b.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            if(checknr(a,house1)){
+                a.spend(house1.getPrice());
+                a.nHouse+=1;
+                a.setAsset(house1);
+                message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+            }
+            else
+                message.setText("You already bought this house");
+       }
+       });
+       house2b.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            if(checknr(a,house2)){
+                a.spend(house2.getPrice());
+                a.nHouse+=1;
+                a.setAsset(house2);
+                message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+            }
+            else
+                message.setText("You already bought this house");
+       }
+       });
+       house3b.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            if(checknr(a,house3)){
+                a.spend(house3.getPrice());
+                a.nHouse+=1;
+                a.setAsset(house3);
+                message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+            }
+            else
+                message.setText("You already bought this house");
+       }
+       });
+       car1b.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            if(checknr(a,car1)){
+                a.spend(car1.getPrice());
+                a.setAsset(car1);
+                message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+            }
+            else
+                message.setText("You already bought this car");
+       }
+       });
+       car2b.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            if(checknr(a,car2)){
+                a.spend(car2.getPrice());
+                a.setAsset(car2);
+                message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+            }
+            else
+                message.setText("You already bought this car");
+       }
+       });
+       car3b.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            if(checknr(a,car3)){
+                a.spend(car3.getPrice());
+                a.setAsset(car3);
+                message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+            }
+            else
+                message.setText("You already bought this car");
+       }
+       });
+       back.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            frame.dispose();
+            homeScreen(a);
+       }
+       });
+    }
+    public static void Business(Player a){
+        Asset business1=new Asset();
+        business1.Asset("Business 1",200000,0,true);
+        Asset business2=new Asset();
+        business2.Asset("Business 2",10000,0,true);
+        Asset business3=new Asset();
+        business3.Asset("Business 3",8000,0,true);
+        
+        JFrame frame=new JFrame("Store");
+        frame.setSize(900,900);
+        frame.setLayout(null);
+        JLabel message=new JLabel("Click on what you want to buy. Think twice! You might loss money from the business and the total worth of the business can decrease");
+        JLabel priceinfo=new JLabel("Business 1: $200000, Business 2: $10000, Business 3: $8000");
+        JButton business1b=new JButton("Business 1");
+        JButton business2b=new JButton("Business 2");
+        JButton business3b=new JButton("Business 3");
+        JButton back=new JButton("Back");
+        JPanel business1p=new JPanel();
+        JPanel business2p=new JPanel();
+        JPanel business3p=new JPanel();
+        JPanel backp=new JPanel();
+        business1p.add(business1b);
+        business2p.add(business2b);
+        business3p.add(business3b);
+        backp.add(back);
+        message.setBounds(50,150,800,30);
+        priceinfo.setBounds(50,200,800,30);
+        business1p.setBounds(100,300,100,30);
+        business2p.setBounds(350,300,100,30);
+        business3p.setBounds(600,300,100,30);
+        backp.setBounds(650,600,200,30);
+        frame.add(message);
+        frame.add(priceinfo);
+        frame.add(business1p);
+        frame.add(business2p);
+        frame.add(business3p);
+        frame.add(backp);
+        frame.setVisible(true);
+        back.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            frame.dispose();
+            homeScreen(a);
+       }
+       });
+    }
+    public static boolean checknr(Player a,Asset get){
+        for(int x=0;x<a.getNumofAsset();x++){
+            if(a.getAsset(x).getName().equals(get.getName()))
+            return false;
+        }
+        return true;
     }
 }
