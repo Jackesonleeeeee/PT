@@ -114,7 +114,7 @@ class MainFrame{
        invest.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
             frame.dispose();
-            //Invest(a);
+            Invest(a);
        }
        });
        sell.addActionListener(new ActionListener(){
@@ -418,10 +418,103 @@ class MainFrame{
         frame.add(business3p);
         frame.add(backp);
         frame.setVisible(true);
+        business1b.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            if(checknr(a,business1)){
+                a.spend(business1.getPrice());
+                a.setAsset(business1);
+                message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+            }
+            else
+                message.setText("You already bought this");
+       }
+       });
+       business2b.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            if(checknr(a,business2)){
+                a.spend(business2.getPrice());
+                a.setAsset(business2);
+                message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+            }
+            else
+                message.setText("You already bought this");
+       }
+       });
+       business3b.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            if(checknr(a,business3)){
+                a.spend(business3.getPrice());
+                a.setAsset(business3);
+                message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+            }
+            else
+                message.setText("You already bought this");
+       }
+       });
         back.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
             frame.dispose();
             homeScreen(a);
+       }
+       });
+    }
+    public static void Invest(Player a){
+        Asset stock1=new Asset();
+        stock1.Asset("Stock 1",1000,0,true);
+        Asset stock2=new Asset();
+        stock2.Asset("Stock 2",5000,0,true);
+        Asset stock3=new Asset();
+        stock3.Asset("Stock 3",800,0,true);
+        Asset savingsPlan=new Asset();
+        savingsPlan.Asset("Savings Plan",0,0,true);
+        
+        JFrame frame=new JFrame("Store");
+        frame.setSize(900,900);
+        frame.setLayout(null);
+        JLabel message=new JLabel("Click on what you want to buy. For savings plan, enter the amount of money you want to put into.");
+        JLabel priceinfo=new JLabel("Stock 1: $1000, Stock 2: $5000, Stock 3: $800");
+        JButton stock1b=new JButton("Stock 1");
+        JButton stock2b=new JButton("Stock 2");
+        JButton stock3b=new JButton("Stock 3");
+        JButton back=new JButton("Back");
+        JButton buy=new JButton("Buy");
+        JPanel stock1p=new JPanel();
+        JPanel stock2p=new JPanel();
+        JPanel stock3p=new JPanel();
+        JPanel backp=new JPanel();
+        JPanel buyp=new JPanel();
+        JTextField input=new JTextField("Input the amount of $ here");
+        stock1p.add(stock1b);
+        stock2p.add(stock2b);
+        stock3p.add(stock3b);
+        backp.add(back);
+        buyp.add(buy);
+        message.setBounds(50,150,800,30);
+        priceinfo.setBounds(50,200,800,30);
+        stock1p.setBounds(100,300,100,30);
+        stock2p.setBounds(350,300,100,30);
+        stock3p.setBounds(600,300,100,30);
+        backp.setBounds(650,600,200,30);
+        buyp.setBounds(350,450,100,30);
+        input.setBounds(100,400,500,30);
+        frame.add(message);
+        frame.add(priceinfo);
+        frame.add(stock1p);
+        frame.add(stock2p);
+        frame.add(stock3p);
+        frame.add(backp);
+        frame.add(buyp);
+        frame.add(input);
+        frame.setVisible(true);
+        back.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            frame.dispose();
+            homeScreen(a);
+       }
+       });
+        buy.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            System.out.println(input.getText());
        }
        });
     }
