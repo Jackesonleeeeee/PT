@@ -467,12 +467,15 @@ class MainFrame{
         stock3.Asset("Stock 3",800,0,true);
         Asset savingsPlan=new Asset();
         savingsPlan.Asset("Savings Plan",0,0,true);
-        
+        if(checknr(a,savingsPlan))
+            a.setAsset(savingsPlan);
+       
         JFrame frame=new JFrame("Store");
         frame.setSize(900,900);
         frame.setLayout(null);
         JLabel message=new JLabel("Click on what you want to buy. For savings plan, enter the amount of money you want to put into.");
         JLabel priceinfo=new JLabel("Stock 1: $1000, Stock 2: $5000, Stock 3: $800");
+        JLabel savinglabel=new JLabel("Savings Plan:");
         JButton stock1b=new JButton("Stock 1");
         JButton stock2b=new JButton("Stock 2");
         JButton stock3b=new JButton("Stock 3");
@@ -495,8 +498,9 @@ class MainFrame{
         stock2p.setBounds(350,300,100,30);
         stock3p.setBounds(600,300,100,30);
         backp.setBounds(650,600,200,30);
-        buyp.setBounds(350,450,100,30);
-        input.setBounds(100,400,500,30);
+        buyp.setBounds(500,400,100,30);
+        savinglabel.setBounds(100,400,100,30);
+        input.setBounds(200,400,300,30);
         frame.add(message);
         frame.add(priceinfo);
         frame.add(stock1p);
@@ -504,8 +508,42 @@ class MainFrame{
         frame.add(stock3p);
         frame.add(backp);
         frame.add(buyp);
+        frame.add(savinglabel);
         frame.add(input);
         frame.setVisible(true);
+        stock1b.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            if(checknr(a,stock1)){
+                a.spend(stock1.getPrice());
+                a.setAsset(stock1);
+                message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+            }
+            else
+                message.setText("You already bought this");
+       }
+       });
+       stock2b.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            if(checknr(a,stock2)){
+                a.spend(stock2.getPrice());
+                a.setAsset(stock2);
+                message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+            }
+            else
+                message.setText("You already bought this");
+       }
+       });
+       stock3b.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            if(checknr(a,stock3)){
+                a.spend(stock3.getPrice());
+                a.setAsset(stock3);
+                message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+            }
+            else
+                message.setText("You already bought this");
+       }
+       });
         back.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
             frame.dispose();
@@ -514,9 +552,50 @@ class MainFrame{
        });
         buy.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
-            System.out.println(input.getText());
-       }
+            double money_in=0;
+            boolean check=false;
+            try{
+                money_in=Integer.parseInt(input.getText());
+                check=true;
+            }
+            catch(Exception e){
+            }
+            if(check && money_in>0){
+                if(money_in<=a.getMoney()){
+                    a.getAsset("Savings Plan").setPrice(money_in+a.getAsset("Savings Plan").getPrice());
+                    a.spend(money_in);
+                    message.setText("Purchase successfully, you have $"+a.getMoney()+" currently!");
+                }
+                else
+                    message.setText("You don't have enough money");
+            }
+            else{
+                message.setText("Invalid Input!!!");
+            }
+        }
        });
+    }
+    public static void Sell(Player a){
+        int sellable=0;
+        for(int x=0;x<a.getNumofAsset();x++)
+        {
+            if(a.getAsset(x).getCanBeSold())
+                sellable++;
+        }
+        Asset[] sellList=new Asset[13];
+        for(int x=0; x<sellable;x++){
+            if(a.getAsset(x).getCanBeSold())
+                sellList[x]=a.getAsset(x);
+        }
+
+        JFrame frame=new JFrame("Store");
+        frame.setSize(900,900);
+        frame.setLayout(null);
+        JLabel[] slot=new JLabel[13];
+        JButton[] sell=new JButton[13];
+        JPanel[] sellp=new JPanel[13];
+        for(int x=0;x<900;x+=30)
+            x++;
     }
     public static boolean checknr(Player a,Asset get){
         for(int x=0;x<a.getNumofAsset();x++){
