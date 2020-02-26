@@ -92,11 +92,11 @@ class MainFrame{
         job.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
             if(a.canApplyJob&&!a.haveJob){
-            frame.dispose();
-            Job(a);
+                frame.dispose();
+                Job(a);
         }
             else
-            message.setText("You already have a job or you applied for it this round");
+                message.setText("You already have a job or you applied for it this round");
        }
        });
        store.addActionListener(new ActionListener(){
@@ -120,7 +120,7 @@ class MainFrame{
        sell.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
             frame.dispose();
-            //Sell(a);
+            Sell(a);
        }
        });
        next.addActionListener(new ActionListener(){
@@ -388,7 +388,7 @@ class MainFrame{
         Asset business3=new Asset();
         business3.Asset("Business 3",8000,0,true);
         
-        JFrame frame=new JFrame("Store");
+        JFrame frame=new JFrame("Business");
         frame.setSize(900,900);
         frame.setLayout(null);
         JLabel message=new JLabel("Click on what you want to buy. Think twice! You might loss money from the business and the total worth of the business can decrease");
@@ -470,7 +470,7 @@ class MainFrame{
         if(checknr(a,savingsPlan))
             a.setAsset(savingsPlan);
        
-        JFrame frame=new JFrame("Store");
+        JFrame frame=new JFrame("Invest");
         frame.setSize(900,900);
         frame.setLayout(null);
         JLabel message=new JLabel("Click on what you want to buy. For savings plan, enter the amount of money you want to put into.");
@@ -588,14 +588,34 @@ class MainFrame{
                 sellList[x]=a.getAsset(x);
         }
 
-        JFrame frame=new JFrame("Store");
+        JFrame frame=new JFrame("Sell");
         frame.setSize(900,900);
         frame.setLayout(null);
+        JLabel message=new JLabel("What do you want to sell.");
+        message.setBounds(50,150,800,30);
+        frame.add(message);
         JLabel[] slot=new JLabel[13];
         JButton[] sell=new JButton[13];
         JPanel[] sellp=new JPanel[13];
-        for(int x=0;x<900;x+=30)
-            x++;
+        for(int x=0;x<13;x++){
+            sell[x]=new JButton("Sell");
+            sellp[x]=new JPanel();
+            slot[x]=new JLabel();
+            if(sellList[x]!=null){
+                slot[x].setText((x+1)+". "+sellList[x].getName()+", worth: $"+sellList[x].getPrice());
+            }
+            else{
+                slot[x].setVisible(false);
+                sellp[x].setVisible(false);
+            }
+            sellp[x].add(sell[x]);
+            sellp[x].setBounds(400,200+40*x,100,30);
+            slot[x].setBounds(100,200+40*x,300,30);
+            frame.add(sellp[x]);
+            frame.add(slot[x]);
+        }
+        frame.setVisible(true);
+        
     }
     public static boolean checknr(Player a,Asset get){
         for(int x=0;x<a.getNumofAsset();x++){
