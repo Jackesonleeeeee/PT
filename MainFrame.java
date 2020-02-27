@@ -5,12 +5,14 @@ import java.awt.event.*;
 
 class MainFrame{
     public static void main(String[] args){
+        startGame();
+    }
+    public static void startGame(){
         Player a=new Player();
         JFrame begin=new JFrame("Begin game");
         begin.setSize(900,900);
         JButton play=new JButton("Play");
         JPanel playp=new JPanel();
-        //playp.setLayout(null);
         begin.setLayout(null);
         playp.add(play);
         playp.setBounds(350,700,200,30);
@@ -18,13 +20,14 @@ class MainFrame{
         begin.setVisible(true);
         play.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
-        startGame(a);
-        begin.dispose();
+            getInitialFund(a);
+            begin.dispose();
+        }
+        });
     }
-    });
-    }
-    public static void startGame(Player a){
-        a.Player(getInitialFund());
+    public static void getInitialFund(Player a){
+        int fund=1000*((int)(10*Math.random())+1);
+        a.Player(fund);
         JFrame frame=new JFrame("Initial Fund");
         frame.setSize(900,900);
         JLabel message=new JLabel("You have $"+a.getMoney()+" to start with");
@@ -43,10 +46,6 @@ class MainFrame{
             homeScreen(a);
         }
         });
-    }
-    public static int getInitialFund(){
-        int fund=1000*((int)(10*Math.random())+1);
-        return fund;
     }
     public static void homeScreen(Player a){
         JFrame frame=new JFrame("Home");
@@ -126,7 +125,7 @@ class MainFrame{
        next.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
             frame.dispose();
-            //Next(a);
+            Next(a);
        }
        });
     }
@@ -594,6 +593,11 @@ class MainFrame{
         JLabel message=new JLabel("What do you want to sell.");
         message.setBounds(50,150,800,30);
         frame.add(message);
+        JButton back=new JButton("Back");
+        JPanel backp=new JPanel();
+        backp.setBounds(600,700,100,30);
+        backp.add(back);
+        frame.add(backp);
         JLabel[] slot=new JLabel[13];
         JButton[] sell=new JButton[13];
         JPanel[] sellp=new JPanel[13];
@@ -602,7 +606,18 @@ class MainFrame{
             sellp[x]=new JPanel();
             slot[x]=new JLabel();
             if(sellList[x]!=null){
+                int n=x;
                 slot[x].setText((x+1)+". "+sellList[x].getName()+", worth: $"+sellList[x].getPrice());
+                sell[x].addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent evt){
+                        a.soldAsset(sellList[n].getName());
+                        a.earn(sellList[n].getPrice());
+                        sellp[n].setVisible(false);
+                        slot[n].setVisible(false);
+                        message.setText("Sold! Now you have $"+a.getMoney());
+                    }
+                
+                });
             }
             else{
                 slot[x].setVisible(false);
@@ -615,7 +630,104 @@ class MainFrame{
             frame.add(slot[x]);
         }
         frame.setVisible(true);
-        
+        back.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                frame.dispose();
+                homeScreen(a);
+            }
+        });
+    }
+    public static void Next(Player a){
+        update(a);
+        double lost=0;
+        double income=0;
+        for(int x=0;x<a.getNumofAsset();x++){
+            income+=a.getAsset(x).Income();
+            lost+=a.getAsset(x).getLost();
+        }
+        if(a.nHouse<1)
+            a.spend(700);
+        System.out.println("Lost:"+lost);
+        System.out.println("Income"+income);
+
+        a.spend(lost);
+        a.earn(income);
+
+        int unexpect=((int)(10*Math.random()))+1;
+        if(unexpect>=8){
+            int unexpectedfee=((int)(10000*Math.random()))+1;
+            System.out.println("unexpected fee:"+unexpectedfee);
+            a.spend(unexpectedfee);
+        }
+
+        System.out.println("Balance:"+a.getMoney());
+        //win
+        if(a.getMoney()>100000||a.roundIndex>=5)
+        {
+            win(a);
+        }
+        //lose
+        if(a.getMoney()<0)
+        {
+            lose(a);
+        }
+        a.roundIndex++;
+        homeScreen(a);
+    }
+    public static void update(Player a){
+        a.canApplyJob=true;
+        String business="Business";
+        String house="House";
+        String car="Car";
+        String stock="Stock";
+        String savings="SavingsPlan";
+        for(int x=0;x<a.getNumofAsset();x++){
+            if(a.getAsset(x).getCanBeSold())
+            {
+                if(business.compareTo(a.getAsset(x).getName())>=0){
+                    double rate = ((int)(7*Math.random()))-3 ;
+                    rate=rate/10+1;
+                    a.getAsset(x).setPrice(rate * a.getAsset(x).getPrice());
+
+                    a.getAsset(x).setIncome(((int)(3000*Math.random()))+1 );
+
+                    int lostornot=((int)(10*Math.random()))+1;
+                    if(lostornot>=4)
+                        a.getAsset(x).setLost(((int)(5000*Math.random()))+1);
+                }
+                else if(house.compareTo(a.getAsset(x).getName())>=0){
+                    double rate = ((int)(3*Math.random()))-1 ;
+                    rate=rate/10+1;
+                    a.getAsset(x).setPrice(rate * a.getAsset(x).getPrice());
+                }
+                else if(car.compareTo(a.getAsset(x).getName())>=0){
+                    a.getAsset(x).setPrice(0.7 * a.getAsset(x).getPrice());
+                }
+                else if(stock.compareTo(a.getAsset(x).getName())>=0){
+                    double rate = ((int)(11*Math.random()))-5;
+                    rate=rate/10+1;
+                    a.getAsset(x).setPrice(rate * a.getAsset(x).getPrice());
+
+                    a.getAsset(x).setIncome(((int)(500*Math.random()))+1 );
+                } 
+                else if(savings.compareTo(a.getAsset(x).getName())>=0){
+                    a.getAsset(x).setPrice(1.05 * a.getAsset(x).getPrice());
+                }
+            }
+        }
+    }
+    public static void win(Player a){
+        //a.Player();
+        System.out.println("You win");
+
+        startGame();
+    }
+
+    public static void lose(Player a){
+        //a.Player();
+        System.out.println("You lost");
+
+        startGame();
     }
     public static boolean checknr(Player a,Asset get){
         for(int x=0;x<a.getNumofAsset();x++){
