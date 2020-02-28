@@ -641,38 +641,81 @@ class MainFrame{
         update(a);
         double lost=0;
         double income=0;
+        double livingCost=(501*Math.random())+1000;
         for(int x=0;x<a.getNumofAsset();x++){
             income+=a.getAsset(x).Income();
             lost+=a.getAsset(x).getLost();
         }
         if(a.nHouse<1)
-            a.spend(700);
-        System.out.println("Lost:"+lost);
-        System.out.println("Income"+income);
+            livingCost+=700;
+        //System.out.println("Lost:"+lost);
+        //System.out.println("Income"+income);
 
-        a.spend(lost);
-        a.earn(income);
+        //a.spend(lost);
+        //a.earn(income);
 
         int unexpect=((int)(10*Math.random()))+1;
+        int unexpectedfee=0;
         if(unexpect>=8){
-            int unexpectedfee=((int)(10000*Math.random()))+1;
-            System.out.println("unexpected fee:"+unexpectedfee);
-            a.spend(unexpectedfee);
+            unexpectedfee=((int)(10000*Math.random()))+1;
+            //System.out.println("unexpected fee:"+unexpectedfee);
+            //a.spend(unexpectedfee);
         }
 
-        System.out.println("Balance:"+a.getMoney());
-        //win
-        if(a.getMoney()>100000||a.roundIndex>=5)
-        {
-            win(a);
-        }
-        //lose
-        if(a.getMoney()<0)
-        {
-            lose(a);
-        }
-        a.roundIndex++;
-        homeScreen(a);
+        JFrame frame=new JFrame("Result");
+        frame.setSize(900,900);
+        frame.setLayout(null);
+        JButton next=new JButton("Next");
+        JPanel nextp=new JPanel();
+        nextp.add(next);
+        JLabel result=new JLabel("Round result:");
+        result.setFont(new Font("Verdana", Font.BOLD, 30));
+        JLabel balancel=new JLabel("Balance: $"+a.getMoney());
+        JLabel incomel=new JLabel("Income: $"+income);
+        JLabel livingCostl=new JLabel("Cost of living: $"+livingCost);
+        JLabel lostl=new JLabel("Lost: $"+lost);
+        JLabel upexpectedfeel=new JLabel("Unexpected fee: $"+unexpectedfee);
+        a.earn(income);
+        a.spend(livingCost+lost+unexpectedfee);
+        JLabel moneyleft=new JLabel("Money left: $"+a.getMoney());
+        result.setBounds(100,190,500,30);
+        nextp.setBounds(600,600,100,30);
+        balancel.setBounds(100,250,500,30);
+        incomel.setBounds(100,300,500,30);
+        livingCostl.setBounds(100,350,500,30);
+        lostl.setBounds(100,400,500,30);
+        upexpectedfeel.setBounds(100,450,500,30);
+        moneyleft.setBounds(150,500,500,30);
+        frame.add(result);
+        frame.add(balancel);
+        frame.add(incomel);
+        frame.add(livingCostl);
+        frame.add(lostl);
+        frame.add(upexpectedfeel);
+        frame.add(moneyleft);
+        frame.add(nextp);
+        frame.setVisible(true);
+        next.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                frame.dispose();
+                //win
+                if(a.getMoney()>100000||a.roundIndex>=5)
+                {
+                    win(a);
+                }
+                //lose
+                else if(a.getMoney()<0)
+                {
+                    lose(a);
+                }
+                else
+                {
+                    a.roundIndex++;
+                    homeScreen(a);
+                }
+            }
+        });
+        
     }
     public static void update(Player a){
         a.canApplyJob=true;
@@ -718,16 +761,46 @@ class MainFrame{
     }
     public static void win(Player a){
         //a.Player();
-        System.out.println("You win");
-
-        startGame();
+        //System.out.println("You win");
+        JFrame frame=new JFrame("You win!!");
+        frame.setSize(900,900);
+        frame.setLayout(null);
+        JButton next=new JButton("Next");
+        JPanel nextp=new JPanel();
+        nextp.add(next);
+        nextp.setBounds(350,700,200,30);
+        JLabel youwin=new JLabel("Wohoo! You win!");
+        youwin.setBounds(100,100,800,30);
+        frame.add(youwin);
+        frame.add(nextp);
+        frame.setVisible(true);
+        next.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                startGame();                
+            }
+        });
     }
 
     public static void lose(Player a){
         //a.Player();
-        System.out.println("You lost");
-
-        startGame();
+        //System.out.println("You lost");
+        JFrame frame=new JFrame("You lost!!");
+        frame.setSize(900,900);
+        frame.setLayout(null);
+        JButton next=new JButton("Next");
+        JPanel nextp=new JPanel();
+        nextp.add(next);
+        nextp.setBounds(350,700,200,30);
+        JLabel youlost=new JLabel("You lost!");
+        youlost.setBounds(100,100,800,30);
+        frame.add(youlost);
+        frame.add(nextp);
+        frame.setVisible(true);
+        next.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                startGame();                
+            }
+        });
     }
     public static boolean checknr(Player a,Asset get){
         for(int x=0;x<a.getNumofAsset();x++){
