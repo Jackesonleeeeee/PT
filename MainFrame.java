@@ -170,7 +170,7 @@ class MainFrame{
             if(chance>8){
                 a.setAsset(job1);
                 a.haveJob=true;
-                homeScreen(a);
+                haveJob(a);
             }
             else{
                 noJob(a);
@@ -183,7 +183,7 @@ class MainFrame{
             if(chance>5){
                 a.setAsset(job2);
                 a.haveJob=true;
-                homeScreen(a);
+                haveJob(a);
             }
             else{
                 noJob(a);
@@ -196,7 +196,7 @@ class MainFrame{
             if(chance>3){
                 a.setAsset(job3);
                 a.haveJob=true;
-                homeScreen(a);
+                haveJob(a);
             }
             else{
                 noJob(a);
@@ -582,11 +582,13 @@ class MainFrame{
                 sellable++;
         }
         Asset[] sellList=new Asset[13];
-        for(int x=0; x<sellable;x++){
-            if(a.getAsset(x).getCanBeSold())
-                sellList[x]=a.getAsset(x);
-        }
-
+        int index=0;
+        for(int x=0; x<a.getNumofAsset();x++){
+            if(a.getAsset(x).getCanBeSold()){
+                sellList[index]=a.getAsset(x);
+                index++;
+            }
+         }
         JFrame frame=new JFrame("Sell");
         frame.setSize(900,900);
         frame.setLayout(null);
@@ -723,11 +725,11 @@ class MainFrame{
         String house="House";
         String car="Car";
         String stock="Stock";
-        String savings="SavingsPlan";
+        String savings="Savings Plan";
         for(int x=0;x<a.getNumofAsset();x++){
             if(a.getAsset(x).getCanBeSold())
             {
-                if(business.compareTo(a.getAsset(x).getName())>=0){
+                if(a.getAsset(x).getName().indexOf(business)>=0){
                     double rate = ((int)(7*Math.random()))-3 ;
                     rate=rate/10+1;
                     a.getAsset(x).setPrice(rate * a.getAsset(x).getPrice());
@@ -738,22 +740,22 @@ class MainFrame{
                     if(lostornot>=4)
                         a.getAsset(x).setLost(((int)(5000*Math.random()))+1);
                 }
-                else if(house.compareTo(a.getAsset(x).getName())>=0){
+                else if(a.getAsset(x).getName().indexOf(house)>=0){
                     double rate = ((int)(3*Math.random()))-1 ;
                     rate=rate/10+1;
                     a.getAsset(x).setPrice(rate * a.getAsset(x).getPrice());
                 }
-                else if(car.compareTo(a.getAsset(x).getName())>=0){
+                else if(a.getAsset(x).getName().indexOf(car)>=0){
                     a.getAsset(x).setPrice(0.7 * a.getAsset(x).getPrice());
                 }
-                else if(stock.compareTo(a.getAsset(x).getName())>=0){
+                else if(a.getAsset(x).getName().indexOf(stock)>=0){
                     double rate = ((int)(11*Math.random()))-5;
                     rate=rate/10+1;
                     a.getAsset(x).setPrice(rate * a.getAsset(x).getPrice());
 
                     a.getAsset(x).setIncome(((int)(500*Math.random()))+1 );
                 } 
-                else if(savings.compareTo(a.getAsset(x).getName())>=0){
+                else if(a.getAsset(x).getName().indexOf(savings)>=0){
                     a.getAsset(x).setPrice(1.05 * a.getAsset(x).getPrice());
                 }
             }
@@ -776,6 +778,7 @@ class MainFrame{
         frame.setVisible(true);
         next.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
+                frame.dispose();
                 startGame();                
             }
         });
@@ -798,6 +801,7 @@ class MainFrame{
         frame.setVisible(true);
         next.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
+                frame.dispose();
                 startGame();                
             }
         });

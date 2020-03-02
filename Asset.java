@@ -28,7 +28,7 @@ public class Asset{
   }
 
   public void setIncome(double in){
-    Income=in;
+     Income=in;
   }
 
   public double Income(){

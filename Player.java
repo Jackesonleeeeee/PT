@@ -49,8 +49,6 @@ class Player{
 
   public void setAsset(Asset in){
     asset.add(in);
-    System.out.println(in.getName());
-    System.out.println("balance:"+money);
   }
 
   public void soldAsset(String in){
