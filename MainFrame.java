@@ -13,15 +13,49 @@ class MainFrame{
         begin.setSize(900,900);
         JButton play=new JButton("Play");
         JPanel playp=new JPanel();
+        JButton instruction=new JButton("Instruction");
+        JPanel instructionp=new JPanel();
         begin.setLayout(null);
         playp.add(play);
         playp.setBounds(350,700,200,30);
+        instructionp.add(instruction);
+        instructionp.setBounds(700,0,200,30);
         begin.add(playp);
+        begin.add(instructionp);
         begin.setVisible(true);
+        
+        JLabel image=new JLabel();
+        image.setIcon(new ImageIcon("image/coin.PNG"));
+        begin.add(image);
+        image.setBounds(200,100,500,500);
+        
         play.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
             getInitialFund(a);
             begin.dispose();
+        }
+        });
+        instruction.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            instruction();
+            begin.dispose();
+        }
+        });
+    }
+    public static void instruction(){
+        JFrame frame=new JFrame("Instruction");
+        frame.setSize(900,900);
+        frame.setLayout(null);
+        frame.setVisible(true);
+        JButton next=new JButton("Ok");
+        JPanel nextp=new JPanel();
+        nextp.add(next);
+        nextp.setBounds(300,500,200,30);
+        frame.add(nextp);
+        next.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent evt){ 
+            frame.dispose();
+            startGame();
         }
         });
     }
