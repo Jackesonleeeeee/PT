@@ -15,19 +15,23 @@ class MainFrame{
         JPanel playp=new JPanel();
         JButton instruction=new JButton("Instruction");
         JPanel instructionp=new JPanel();
+        JLabel title=new JLabel("Personal Finance Game");
         begin.setLayout(null);
         playp.add(play);
         playp.setBounds(350,700,200,30);
+        title.setBounds(140,200,700,60);
+        title.setFont(new Font("Serif", Font.BOLD, 60));
         instructionp.add(instruction);
         instructionp.setBounds(700,0,200,30);
         begin.add(playp);
+        begin.add(title);
         begin.add(instructionp);
         begin.setVisible(true);
         
         JLabel image=new JLabel();
-        image.setIcon(new ImageIcon("image/coin.PNG"));
+        image.setIcon(new ImageIcon("image/PF.jpg"));
         begin.add(image);
-        image.setBounds(200,100,500,500);
+        image.setBounds(340,350,260,260);
         
         play.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
@@ -71,6 +75,7 @@ class MainFrame{
         nextp.add(next);
         nextp.setBounds(350,700,200,30);
         frame.setLayout(null);
+        message.setFont();
         frame.add(message);
         frame.add(nextp);
         frame.setVisible(true);
@@ -80,6 +85,11 @@ class MainFrame{
             homeScreen(a);
         }
         });
+        
+        JLabel image=new JLabel();
+        image.setIcon(new ImageIcon("image/money_icon.PNG"));
+        frame.add(image);
+        image.setBounds(500,250,250,250);
     }
     public static void homeScreen(Player a){
         JFrame frame=new JFrame("Home");
