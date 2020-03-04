@@ -53,29 +53,38 @@ class MainFrame{
         frame.setVisible(true);
         JButton next=new JButton("Ok");
         JPanel nextp=new JPanel();
+        JLabel instruction=new JLabel("Instruction");
+        instruction.setFont(new Font("Tahoma", Font.PLAIN, 60));
+        instruction.setBounds(100,60,700,60);
         nextp.add(next);
-        nextp.setBounds(300,500,200,30);
+        nextp.setBounds(350,725,200,30);
         frame.add(nextp);
+        frame.add(instruction);
         next.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent evt){ 
             frame.dispose();
             startGame();
         }
         });
+        
+        JLabel image=new JLabel();
+        image.setIcon(new ImageIcon("image/InstructInfo.png"));
+        frame.add(image);
+        image.setBounds(180,150,513,560);
     }
     public static void getInitialFund(Player a){
         int fund=1000*((int)(10*Math.random())+1);
         a.Player(fund);
         JFrame frame=new JFrame("Initial Fund");
         frame.setSize(900,900);
-        JLabel message=new JLabel("You have $"+a.getMoney()+" to start with");
-        message.setBounds(100,300,200,30);
+        JLabel message=new JLabel("You have $"+a.getMoney()+" to start with!");
+        message.setBounds(100,300,400,30);
         JButton next=new JButton("Next");
         JPanel nextp=new JPanel();
         nextp.add(next);
         nextp.setBounds(350,700,200,30);
         frame.setLayout(null);
-        message.setFont();
+        message.setFont(new Font("Tahoma", Font.PLAIN, 25));
         frame.add(message);
         frame.add(nextp);
         frame.setVisible(true);
@@ -816,7 +825,8 @@ class MainFrame{
         nextp.add(next);
         nextp.setBounds(350,700,200,30);
         JLabel youwin=new JLabel("Wohoo! You win!");
-        youwin.setBounds(100,100,800,30);
+        youwin.setBounds(100,100,800,60);
+        youwin.setFont(new Font("Tahoma", Font.PLAIN, 60));
         frame.add(youwin);
         frame.add(nextp);
         frame.setVisible(true);
@@ -839,9 +849,11 @@ class MainFrame{
         nextp.add(next);
         nextp.setBounds(350,700,200,30);
         JLabel youlost=new JLabel("You lost!");
-        youlost.setBounds(100,100,800,30);
+        youlost.setBounds(100,100,800,60);
+        youlost.setFont(new Font("Tahoma", Font.PLAIN, 60));
         frame.add(youlost);
         frame.add(nextp);
+        
         frame.setVisible(true);
         next.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
