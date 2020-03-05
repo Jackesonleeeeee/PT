@@ -45,6 +45,7 @@ class MainFrame{
             begin.dispose();
         }
         });
+        begin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     public static void instruction(){
         JFrame frame=new JFrame("Instruction");
