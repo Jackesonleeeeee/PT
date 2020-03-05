@@ -836,6 +836,11 @@ class MainFrame{
                 startGame();                
             }
         });
+        
+        JLabel image=new JLabel();
+        image.setIcon(new ImageIcon("image/win.png"));
+        frame.add(image);
+        image.setBounds(200,250,485,339);
     }
 
     public static void lose(Player a){
@@ -861,6 +866,11 @@ class MainFrame{
                 startGame();                
             }
         });
+        
+        JLabel image=new JLabel();
+        image.setIcon(new ImageIcon("image/lost.png"));
+        frame.add(image);
+        image.setBounds(200,250,400,400);
     }
     public static boolean checknr(Player a,Asset get){
         for(int x=0;x<a.getNumofAsset();x++){
