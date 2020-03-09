@@ -876,7 +876,7 @@ class MainFrame{
     public static boolean checknr(Player a,Asset get){
         for(int x=0;x<a.getNumofAsset();x++){
             if(a.getAsset(x).getName().equals(get.getName()))
-            return false;
+                return false;
         }
         return true;
     }
